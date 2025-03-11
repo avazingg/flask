@@ -109,10 +109,10 @@
 
 6. Запустите приложение:
    ```
-   flask run --port=8080
+   flask run --port=5000
    ```
 
-7. Приложение будет доступно по адресу: http://localhost:8080
+7. Приложение будет доступно по адресу: http://localhost:5000
 
 ## Запуск тестов
 
@@ -169,20 +169,20 @@
 
 ### Документация API
 
-Документация API доступна по адресу: http://localhost:8080/api/docs
+Документация API доступна по адресу: http://localhost:5000/api/docs
 
 ### Примеры запросов к API
 
 #### Регистрация нового пользователя
 ```
-curl -X POST http://localhost:8080/api/register \
+curl -X POST http://localhost:5000/api/register \
   -H "Content-Type: application/json" \
   -d '{"username": "user1", "password": "password123"}'
 ```
 
 #### Вход в систему
 ```
-curl -X POST http://localhost:8080/api/login \
+curl -X POST http://localhost:5000/api/login \
   -H "Content-Type: application/json" \
   -d '{"username": "user1", "password": "password123"}' \
   -c cookies.txt
@@ -190,13 +190,13 @@ curl -X POST http://localhost:8080/api/login \
 
 #### Получение списка задач
 ```
-curl -X GET http://localhost:8080/api/tasks \
+curl -X GET http://localhost:5000/api/tasks \
   -b cookies.txt
 ```
 
 #### Создание новой задачи
 ```
-curl -X POST http://localhost:8080/api/tasks \
+curl -X POST http://localhost:5000/api/tasks \
   -H "Content-Type: application/json" \
   -b cookies.txt \
   -d '{"title": "Новая задача", "description": "Описание задачи"}'
@@ -204,13 +204,13 @@ curl -X POST http://localhost:8080/api/tasks \
 
 #### Получение задачи по ID
 ```
-curl -X GET http://localhost:8080/api/tasks/1 \
+curl -X GET http://localhost:5000/api/tasks/1 \
   -b cookies.txt
 ```
 
 #### Обновление задачи
 ```
-curl -X PUT http://localhost:8080/api/tasks/1 \
+curl -X PUT http://localhost:5000/api/tasks/1 \
   -H "Content-Type: application/json" \
   -b cookies.txt \
   -d '{"title": "Обновленная задача", "description": "Новое описание", "completed": true}'
@@ -218,13 +218,13 @@ curl -X PUT http://localhost:8080/api/tasks/1 \
 
 #### Удаление задачи
 ```
-curl -X DELETE http://localhost:8080/api/tasks/1 \
+curl -X DELETE http://localhost:5000/api/tasks/1 \
   -b cookies.txt
 ```
 
 #### Переключение статуса задачи
 ```
-curl -X POST http://localhost:8080/api/tasks/1/toggle \
+curl -X POST http://localhost:5000/api/tasks/1/toggle \
   -b cookies.txt
 ```
 
@@ -239,7 +239,7 @@ curl -X POST http://localhost:8080/api/tasks/1/toggle \
 ### Запуск в режиме отладки
 
 ```
-FLASK_DEBUG=1 flask run --port=8080
+FLASK_DEBUG=1 flask run --port=5000
 ```
 
 ### Непрерывная интеграция
