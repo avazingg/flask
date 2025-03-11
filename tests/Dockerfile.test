@@ -1,0 +1,27 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Установка основных зависимостей
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Установка зависимостей для тестирования
+COPY tests/requirements.txt ./tests/
+RUN pip install --no-cache-dir -r tests/requirements.txt && \
+    apt-get update && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Копирование тестов и конфигурационных файлов
+COPY . .
+
+# Переменные окружения для тестов
+ENV DATABASE_URL=postgresql://postgres:postgres@db:5432/taskmanager
+ENV TEST_DATABASE_URL=postgresql://postgres:postgres@db:5432/taskmanager_test
+# Переменная для выбора тестов, по умолчанию - тест подключения к БД
+ENV TEST_PATH=tests/db_connection_test.py
+ENV TEST_ARGS=""
+
+# Используем CMD для запуска тестов с переменными окружения и отключенным перехватом вывода
+CMD pytest ${TEST_PATH} -v -s ${TEST_ARGS}
