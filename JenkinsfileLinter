@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Run Linter Tests') {
+            steps {
+                script {
+                    
+                    sh "docker-compose run lint"
+                }
+            }
+        }
+    }
+
+    post {
+        cleanup {
+            echo 'Cleaning up...'
+            sh '''
+            docker compose down
+            rm -rf allure.zip $ALLURE_RESULTS_DIR
+            '''
+            deleteDir()
+        }
+    }
+}

@@ -56,5 +56,12 @@ services:
       - db
       - web
 
+  lint:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.linter
+    volumes:
+      - .:/app
+
 volumes:
   postgres_data:
