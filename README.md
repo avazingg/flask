@@ -141,6 +141,13 @@
 
    # Конкретный тест с дополнительными аргументами
    docker-compose run --rm -e TEST_PATH=tests/api/test_task_lifecycle.py -e TEST_ARGS="-k test_create_task" test
+
+   # Тест с allure reports 
+   docker compose run --rm -e TEST_ARGS=--alluredir=test-results test
+
+   allure generate test-results -o allure-report --clean
+
+   allure open allure-report
    ```
 
 ### Запуск тестов без Docker
@@ -250,6 +257,6 @@ FLASK_DEBUG=1 flask run --port=5000
 
 - `tests/api/` - тесты REST API
 - `tests/ui/` - тесты пользовательского интерфейса
-- `tests/db_connection_test.py` - тесты подключения к базе данных
+- `tests/test_db_connection.py` - тесты подключения к базе данных
 
 Подробная информация о тестировании доступна в файле `README_TESTING.md`.

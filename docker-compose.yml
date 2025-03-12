@@ -44,14 +44,13 @@ services:
       dockerfile: ./tests/Dockerfile.test
     volumes:
       - .:/app
-      - ./test-results:/app/test-results
     environment:
       - POSTGRES_HOST=db
       - POSTGRES_PORT=5432
       - POSTGRES_DB=taskmanager
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - TEST_PATH=tests/db_connection_test.py
+      - TEST_PATH=tests/test_db_connection.py
       - TEST_ARGS=
     depends_on:
       - db
