@@ -6,21 +6,28 @@ pipeline {
     }
 
     stages {
+
         stage('Build and Start Services') {
             steps {
                 script {
-                    MY_APP_DIR='/var/lib/docker/volumes/jenkins-data-flask/_data/workspace/$JOB_NAME'
-                    // Собираем и поднимаем web и db сервисы в фоне
-                    sh 'MY_APP_DIR docker compose up --build web db -d'
+                    // Задаем переменную MY_APP_DIR 
+                    env.MY_APP_DIR = "/var/lib/docker/volumes/jenkins-data-flask/_data/workspace/${env.JOB_NAME}"
+                    echo "MY_APP_DIR is ${env.MY_APP_DIR}"
+                    // Выполняем команду в оболочке; переменная MY_APP_DIR будет доступна благодаря env.
+                    sh """
+                        echo "Using MY_APP_DIR: \$MY_APP_DIR"
+                        docker compose up --build web db -d
+                    """
                 }
             }
         }
         stage('Run Tests') {
             steps {
                 script {
-                    // Запускаем тесты. Сервис "test" описан в docker-compose.yml
-                    sh'mkdir -p $ALLURE_RESULTS_DIR'
-                    sh "MY_APP_DIR docker compose run --rm  -e TEST_PATH=tests/ -e TEST_ARGS='--alluredir=$ALLURE_RESULTS_DIR' test"
+                    // Создаем директорию для результатов
+                    sh "mkdir -p ${env.ALLURE_RESULTS_DIR}"
+                    // Запускаем тестовый сервис; переменная ALLURE_RESULTS_DIR будет доступна
+                    sh "docker compose run --rm -e TEST_PATH=tests/ -e TEST_ARGS='--alluredir=${env.ALLURE_RESULTS_DIR}' test"
                 }
             }
         }
@@ -29,9 +36,9 @@ pipeline {
     post {
         always {
             script {
-                def resultsExist = sh(returnStatus: true, script: '''
-                [ -d $ALLURE_RESULTS_DIR ] && [ "$(ls -A $ALLURE_RESULTS_DIR)" ]
-                ''') == 0
+                def resultsExist = sh(returnStatus: true, script: """
+                    [ -d ${env.ALLURE_RESULTS_DIR} ] && [ \"\$(ls -A ${env.ALLURE_RESULTS_DIR})\" ]
+                """) == 0
 
                 if (resultsExist) {
                     echo 'Allure results found. Generating report...'
@@ -40,7 +47,7 @@ pipeline {
                         jdk: '',
                         properties: [],
                         reportBuildPolicy: 'ALWAYS',
-                        results: [[path: '$ALLURE_RESULTS_DIR']]
+                        results: [[path: "${env.ALLURE_RESULTS_DIR}"]]
                     ])
                 } else {
                     echo 'No Allure results found. Tests might not have run.'
@@ -49,10 +56,10 @@ pipeline {
         }
         cleanup {
             echo 'Cleaning up...'
-            sh '''
+            sh """
             docker compose down
-            rm -rf allure.zip $ALLURE_RESULTS_DIR
-            '''
+            rm -rf allure.zip ${env.ALLURE_RESULTS_DIR}
+            """
             deleteDir()
         }
     }

@@ -43,7 +43,7 @@ services:
       context: .
       dockerfile: ./tests/Dockerfile.test
     volumes:
-      - .:/app
+      - ${MY_APP_DIR:-.}:/app
     environment:
       - POSTGRES_HOST=db
       - POSTGRES_PORT=5432

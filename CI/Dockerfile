@@ -23,4 +23,4 @@ RUN apt-get update && apt-get install -y docker-ce-cli
 RUN usermod -aG root jenkins
 
 # Переключаемся обратно на пользователя jenkins
-USER jenkins
+USER root
