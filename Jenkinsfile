@@ -9,8 +9,9 @@ pipeline {
         stage('Build and Start Services') {
             steps {
                 script {
+                    MY_APP_DIR='/var/lib/docker/volumes/jenkins-data-flask/_data/workspace/$JOB_NAME'
                     // Собираем и поднимаем web и db сервисы в фоне
-                    sh 'docker compose up --build web db -d'
+                    sh 'MY_APP_DIR docker compose up --build web db -d'
                 }
             }
         }
@@ -19,7 +20,7 @@ pipeline {
                 script {
                     // Запускаем тесты. Сервис "test" описан в docker-compose.yml
                     sh'mkdir -p $ALLURE_RESULTS_DIR'
-                    sh "docker compose run --rm  -e TEST_PATH=tests/ -e TEST_ARGS='--alluredir=$ALLURE_RESULTS_DIR' test"
+                    sh "MY_APP_DIR docker compose run --rm  -e TEST_PATH=tests/ -e TEST_ARGS='--alluredir=$ALLURE_RESULTS_DIR' test"
                 }
             }
         }

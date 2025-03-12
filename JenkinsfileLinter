@@ -5,8 +5,8 @@ pipeline {
         stage('Run Linter Tests') {
             steps {
                 script {
-                    
-                    sh "docker-compose run lint"
+                    MY_APP_DIR='/var/lib/docker/volumes/jenkins-data-flask/_data/workspace/$JOB_NAME'
+                    sh "$MY_APP_DIR docker-compose run lint"
                 }
             }
         }
@@ -15,10 +15,6 @@ pipeline {
     post {
         cleanup {
             echo 'Cleaning up...'
-            sh '''
-            docker compose down
-            rm -rf allure.zip $ALLURE_RESULTS_DIR
-            '''
             deleteDir()
         }
     }
