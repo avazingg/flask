@@ -1,12 +1,7 @@
 FROM python:3.9-slim
 
+# Устанавливаем нужные пакеты (flake8, black, mypy и т.д.)
+RUN pip install --no-cache-dir flake8
+
 WORKDIR /app
-
-# Устанавливаем flake8
-RUN pip install flake8
-
-# Копируем весь исходный код
-COPY . .
-
-# Запускаем линтер на всей директории /app
 CMD ["flake8", "."]

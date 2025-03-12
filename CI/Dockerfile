@@ -19,8 +19,4 @@ RUN echo "deb [arch=$(dpkg --print-architecture) \
 # Устанавливаем Docker CLI
 RUN apt-get update && apt-get install -y docker-ce-cli
 
-# Даем пользователю jenkins права root (добавляем его в группу root)
-RUN usermod -aG root jenkins
-
-# Переключаемся обратно на пользователя jenkins
 USER root
