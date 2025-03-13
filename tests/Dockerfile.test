@@ -1,17 +1,40 @@
 FROM python:3.9-slim
 
 WORKDIR /app
-
-# Установка системных зависимостей, включая Java для Allure
+ENV PYTHONPATH=/app
+# Установка системных зависимостей
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      openjdk-17-jre-headless \
-      wget \
-      unzip && \
+        openjdk-17-jre-headless \
+        wget \
+        unzip \
+        gnupg \
+        ca-certificates \
+        fonts-liberation \
+        libasound2 \
+        libatk-bridge2.0-0 \
+        libatk1.0-0 \
+        libcups2 \
+        libdbus-1-3 \
+        libgdk-pixbuf2.0-0 \
+        libnspr4 \
+        libnss3 \
+        libx11-xcb1 \
+        libxcomposite1 \
+        libxdamage1 \
+        libxrandr2 \
+        xdg-utils && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Установка основных зависимостей
+# Установка Google Chrome
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    apt-get install -yf && \
+    rm google-chrome-stable_current_amd64.deb &&\
+    apt-get clean
+
+
+# Установка основных зависимостей Python
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -19,7 +42,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY tests/requirements.txt ./tests/
 RUN pip install --no-cache-dir -r tests/requirements.txt
 
-# Копирование тестов и конфигурационных файлов
+# Копирование исходного кода и тестов
 COPY . .
 
 # Установка Allure Commandline
@@ -31,9 +54,8 @@ RUN wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandlin
 # Переменные окружения для тестов
 ENV DATABASE_URL=postgresql://postgres:postgres@db:5432/taskmanager
 ENV TEST_DATABASE_URL=postgresql://postgres:postgres@db:5432/taskmanager_test
-# Переменная для выбора тестов, по умолчанию - тест подключения к БД
 ENV TEST_PATH=tests/test_db_connection.py
 ENV TEST_ARGS=""
 
-# Используем CMD для запуска тестов с переменными окружения и отключенным перехватом вывода
+# Запуск тестов с помощью pytest
 CMD pytest ${TEST_PATH} -v -s ${TEST_ARGS}
