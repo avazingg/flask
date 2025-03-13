@@ -61,6 +61,7 @@ docker exec jenkins-with-docker cat /var/jenkins_home/secrets/initialAdminPasswo
 
 ```
 docker exec -it --user root jenkins-with-docker bash
+
 ```
 Внутри контейнера выполните следующие команды:
 
