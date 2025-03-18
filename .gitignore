@@ -37,5 +37,7 @@ Pipfile.lock
 # Docker-файлы
 .dockerignore
 docker-compose.override.yml
+allure/
 allure-report/
 test-results/
+.aider*

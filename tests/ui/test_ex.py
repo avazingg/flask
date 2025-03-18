@@ -1,27 +1,26 @@
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import pytest
-
-
 
 @pytest.fixture
 def driver():
     options = Options()
-    options.add_argument("--no-sandbox")  # Убирает проблемы с sandbox в контейнере
-    options.add_argument("--disable-dev-shm-usage")  # Исправляет ошибки с памятью
-    options.add_argument("--headless")  # Запуск в headless-режиме (если нужно)
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--headless")
+    options.binary_location = '/usr/bin/google-chrome-stable'
 
-    service = Service(ChromeDriverManager().install())
+    # Явно указываем путь к ChromeDriver в контейнере
+    service = Service('/usr/local/bin/chromedriver')
     driver = webdriver.Chrome(service=service, options=options)
-
+    
     yield driver
     driver.quit()
 
-
 def test_web_api(driver):
-    url = "http://localhost:5000"
+    url = "http://web:5000"
     driver.get(url)
     
     # Получаем и выводим заголовок страницы

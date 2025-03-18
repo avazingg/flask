@@ -10,12 +10,18 @@ DB_PARAMS = {
     'dbname': os.environ.get('POSTGRES_DB', 'taskmanager'),
     'user': os.environ.get('POSTGRES_USER', 'postgres'),
     'password': os.environ.get('POSTGRES_PASSWORD', 'postgres'),
-    'host': os.environ.get('POSTGRES_HOST', 'db'),
+    #local
+    'host': os.environ.get('POSTGRES_HOST', 'localhost'),
+    #Docker
+    # 'host': os.environ.get('POSTGRES_HOST', 'db'),
     'port': os.environ.get('POSTGRES_PORT', '5432')
 }
 
 # URL API-сервера
-BASE_URL = "http://web:5000/api"
+#local
+BASE_URL = "http://localhost:5000/api"
+#Docker
+#BASE_URL = "http://web:5000/api"
 
 # Данные тестового пользователя
 TEST_USER = {"username": "testuser1", "password": "testpass"}

@@ -2,8 +2,10 @@ pytest==7.3.1
 allure-pytest==2.13.2
 selenium==4.10.0
 requests==2.31.0
+#Docker
 psycopg2-binary==2.9.5
+#local
+# psycopg2
 jsonschema
 pytest-flake8
-selenium
 webdriver-manager
