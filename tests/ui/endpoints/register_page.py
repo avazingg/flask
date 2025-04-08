@@ -1,4 +1,4 @@
-from dill import settings
+
 from selenium.webdriver.common.by import By
 from tests.ui.endpoints.base_page import BasePage
 
