@@ -11,7 +11,8 @@ class RegisterPage(BasePage):
     REGISTER_BUTTON = (By.CSS_SELECTOR, "[data-testid='register-button']")
     ERROR_ALERT = (By.CSS_SELECTOR, "[data-testid='flash-message-danger']")
     SUCCESS_ALERT = (By.CSS_SELECTOR, "[data-testid='flash-message-success']")
-    LOGIN_LINK = (By.CSS_SELECTOR, "[data-testid='login-link']")
+    LOGIN_LINK = (By.CSS_SELECTOR, "[data-testid='nav-login']")
+    REGISTER_LINK = (By.CSS_SELECTOR, "[data-testid='nav-register']")
 
     def enter_username(self, username):
         self.enter_text(self.USERNAME_INPUT, username)
@@ -30,3 +31,6 @@ class RegisterPage(BasePage):
 
     def click_login_link(self):
         self.click_element(self.LOGIN_LINK)
+
+    def click_register_link(self):
+        self.click_element(self.REGISTER_LINK)
