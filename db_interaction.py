@@ -74,8 +74,8 @@ if __name__ == "__main__":
     # Пример использования класса
     db_manager = DatabaseManager()
 
-    # Перезапускаем БД
-    db_manager.restart_whole_db()
+    # # Перезапускаем БД
+    # db_manager.restart_whole_db()
 
     # Показываем состояние базы данных
     db_manager.show_db()
