@@ -49,4 +49,5 @@ class BaseEndpoint():
         return self.response.json()["completed"]
 
     def check_all_fields(self, expected_data):
-        assert self.get_data()["data"] == expected_data["data"], "wrong data in it"
+        assert self.get_data()["data"] == expected_data["data"],\
+            "wrong data in it"

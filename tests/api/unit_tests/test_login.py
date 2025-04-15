@@ -1,11 +1,10 @@
-from tests.api.endpoints.base_endpoint import BaseEndpoint
-from tests.api.endpoints.login_user import LoginUser
-
+"""Unit tests for user login API endpoint."""
 import allure
 
 @allure.feature("API Тесты")
 @allure.story("Авторизация пользователя")
 def test_login(register_login_user):
+    """Тестирует успешную авторизацию через API."""
     user_id = register_login_user["user_id"]
     login_response = register_login_user["login_response"]
 
@@ -19,4 +18,5 @@ def test_login(register_login_user):
 
     with allure.step("Проверяем username"):
         assert register_login_user["username"] == login_response["username"], \
-            f"Expected username {register_login_user['username']} but got {login_response['username']}"
+            f"Expected username {register_login_user['username']}\
+             but got {login_response['username']}"

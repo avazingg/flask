@@ -10,7 +10,7 @@ pipeline {
         stage('Build and Start Services') {
             steps {
                 script {
-                    // Задаем переменную MY_APP_DIR 
+                    // Задаем переменную MY_APP_DIR
                     env.MY_APP_DIR = "/var/lib/docker/volumes/jenkins-data-flask/_data/workspace/${env.JOB_NAME}"
                     echo "MY_APP_DIR is ${env.MY_APP_DIR}"
                     // Выполняем команду в оболочке; переменная MY_APP_DIR будет доступна благодаря env.

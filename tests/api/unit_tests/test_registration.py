@@ -1,3 +1,4 @@
+"""Unit tests for user registration API endpoint."""
 from tests.api.endpoints.register_user import RegisterUser
 from db_interaction import DatabaseManager
 
@@ -7,6 +8,7 @@ import allure
 @allure.feature("API Тесты")
 @allure.story("Регистрация пользователя")
 def test_register(session):
+    """Тестирует успешную регистрацию через API."""
     test_user = {
         "username": "apiuser1",
         "password": "apiuser"
