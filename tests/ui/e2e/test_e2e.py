@@ -18,8 +18,8 @@ from db_interaction import DatabaseManager
 @allure.story("Полный цикл создания задачи")
 def test_e2e_ui_test(driver):
     """Тест проверяет полный жизненный цикл приложения"""
-    db = DatabaseManager()
-    db.restart_whole_db()
+    # db = DatabaseManager()
+    # db.restart_whole_db()
     with allure.step("Открываем домашнюю страницу"):
         register_page = RegisterPage(driver)
         login_page = LoginPage(driver)

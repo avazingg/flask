@@ -95,5 +95,5 @@ def test_e2e_task_management_api(session):
     # Шаг 8: Удаление задачи
     with allure.step("Удаляем задачу через API"):
         delete_task = DeleteTask()
-        response = delete_task.delete_task(session=session, task_id=task_id)
+        delete_task.delete_task(session=session, task_id=task_id)
         delete_task.check_response_is_204()

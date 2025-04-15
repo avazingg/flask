@@ -39,7 +39,7 @@ invalid_task_template_no_title = {
 }
 
 invalid_task_template_no_description = {
-   "title": "",
-   "description": "12123",
+   "title": "asdassd",
+   "description": "",
    "completed": True
 }

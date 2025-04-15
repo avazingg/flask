@@ -23,7 +23,7 @@ def test_delete(session, register_login_user): # pylint: disable=unused-argument
     delete_task = DeleteTask()
 
     with allure.step(f"Удаляем задачу с ID = {task_id}"):
-        response = delete_task.delete_task(session=session, task_id=task_id)
+        delete_task.delete_task(session=session, task_id=task_id)
 
     with allure.step("Проверяем, что задача успешно удалена (204 No Content)"):
         delete_task.check_response_is_204()
